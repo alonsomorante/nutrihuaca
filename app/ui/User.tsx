@@ -11,7 +11,7 @@ async function User() {
       {
         users.map(user => (
           <li key={user.name}>
-              {user.name} aaa
+              {user.name} a
           </li>
         ))
       }
