@@ -1,8 +1,8 @@
 import Image from "next/image";
 import prisma from "./lib/db"
 
-async function Page() {
-  const [legumes, fruits, vegetables] = await Promise.all([
+export default async function Page() {
+  const [fruits, vegetables] = await Promise.all([
     prisma.legumes.findMany(),
     prisma.fruits.findMany(),
     prisma.vegetables.findMany()
@@ -35,5 +35,3 @@ async function Page() {
     </section>
   )
 }
-
-export default Page
