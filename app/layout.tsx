@@ -1,5 +1,6 @@
 import React from "react";
 import { poppins } from "./ui/fonts";
+import './globals.css';
 
 export default function RootLayout({
   children,

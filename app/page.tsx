@@ -1,16 +1,20 @@
-import Image from "next/image";
-import prisma from "./lib/db"
+// import Image from "next/image";
+// import prisma from "./lib/db"
+
+import ComponentTest from "@/components/ui/component";
+// import Square from "@/components/ui/square";
+
 
 export default async function Page() {
-  const [fruits, vegetables] = await Promise.all([
-    prisma.legumes.findMany(),
-    prisma.fruits.findMany(),
-    prisma.vegetables.findMany()
-  ]);
+  // const [fruits, vegetables] = await Promise.all([
+  //   prisma.legumes.findMany(),
+  //   prisma.fruits.findMany(),
+  //   prisma.vegetables.findMany()
+  // ]);
 
   return (
-    <section className="flex">
-      <ul>
+    <section className="w-full h-screen">
+      {/* <ul className="flex flex-col">
         {
           vegetables.map(e => {
             return (
@@ -22,8 +26,9 @@ export default async function Page() {
           })
 
         }
-      </ul>
-      <ul>
+      </ul> */}
+      {/* <p className="text-4xl">asd</p> */}
+      {/* <ul>
         {
           fruits.map(e =>
           (
@@ -31,7 +36,10 @@ export default async function Page() {
           )
           )
         }
-      </ul>
+      </ul> */}
+      {/* <p className="text-t">asdad</p> */}
+      {/* <Square /> */}
+      <ComponentTest />
     </section>
   )
-}
+} 
