@@ -11,79 +11,31 @@ import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 
 
+const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
+
+const optionsText = {
+  "Peso ideal": "La calculadora de calorías se puede usar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas directrices simples para ganar o perder peso.",
+  "Porcentaje de grasa": "La calculadora de grasa corporal se puede utilizar para estimar su grasa corporal total basada en medidas específicas.",
+  "Consumo calórico": "La calculadora de calorías se puede utilizar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas pautas simples para ganar o perder peso."
+}
+
+
 export default function Page() {
-  // const [fruits, vegetables] = await Promise.all([
-  //   prisma.legumes.findMany(),
-  //   prisma.fruits.findMany(),
-  //   prisma.vegetables.findMany()
-  // ]);
 
   const [toggle, setToggle] = useState(false)
+  const [selected, setSelected] = useState('Peso ideal')
+
+  
 
   return (
-    <section className="w-full h-screen p-2 "  >
-      {/* <ul className="flex flex-col">
-        { 
-          vegetables.map(e => {
-            return (
-              <li key={e.id}>
-                <p>{e.name}</p>
-                <Image src={e.image === 'none' ? 'https://www.unlockfood.ca/EatRightOntario/media/Website-images-resized/How-to-store-fruit-to-keep-it-fresh-resized.jpg' : e.image} width={240} height={120} alt="none" />
-              </li>
-            )
-          })
-
-        }
-      </ul> */}
-      {/* <p className="text-4xl">asd</p> */}
-      {/* <ul>
-        {
-          fruits.map(e =>
-          (
-            <li key={e.id}>{e.name}</li>
-          )
-          )
-        }
-      </ul> */}
-      {/* <p className="text-t">asdad</p> */}
-      {/* <Square /> */}
-      {/* <ComponentTest /> */}
+    <section className="w-full h-screen p-2"  >
       <section
-        className="flex flex-col h-full"
+        className="h-full flex flex-col"
       >
         <div>
           <h1 className="text-2xl font-bold"> Nutrihuaca </h1>
         </div>
-        {/* <motion.div
-          initial={{ width: '100%', height: '100%' }}
-          animate={{ width: 0, height: 0, opacity: 0 }}
-          transition={{ duration: 12, ease: 'easeOut', type: 'tween' }}
-        >
-          <div className="h-full flex flex-col gap-4 justify-center items-center">
-            <div className="flex">
-              <div className="px-4 py-1 bg-[#5D8736] text-white">
-                <p>IMC</p>
-              </div>
-              <div className="px-4 py-1 bg-[#5D8736] text-white">
-                <p>Porcentaje de grasa</p>
-              </div>
-              <div className="px-4 py-1 bg-[#5D8736] text-white">
-                <p>Macro</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-center items-center">
-                <Calculator width={36} height={36} stroke="#809D3C" />
-              </div>
-              <h2 className="text-balance text-4xl text-center font-bold leading-8">Calories calculadora</h2>
-              <p className="text-balance text-center text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, odit sunt a accusantium ratione necessitatibus voluptas dolor, maiores inventore placeat nemo quibusdam mollitia rerum illo quod sint, porro debitis aperiam.</p>
-            </div>
-            <div className="flex px-6 py-2.5 rounded-full gap-8 bg-[#5D8736] text-white text-sm justify-center items-center cursor-pointer mt-4" onClick={() => setToggle(!toggle)}>
-              <p>Siguiente</p>
-              <ArrowRight width={16} height={16} />
-            </div>
-          </div>
-        </motion.div> */}
+       
         <AnimatePresence initial={false}>
           {
             !toggle && (
@@ -94,23 +46,36 @@ export default function Page() {
                 transition={{ duration: 0 }}
               >
                 <div className="h-full flex flex-col gap-4 justify-center items-center">
-                  <div className="flex">
-                    <div className="px-4 py-1 bg-[#5D8736] text-white">
-                      <p>IMC</p>
-                    </div>
-                    <div className="px-4 py-1 bg-[#5D8736] text-white">
-                      <p>Porcentaje de grasa</p>
-                    </div>
-                    <div className="px-4 py-1 bg-[#5D8736] text-white">
-                      <p>Macro</p>
-                    </div>
+                  <div className="flex mb-4">
+                    {options.map((option) => (
+                      <motion.button
+                        key={option}
+                        initial={false}
+                        animate={{
+                          backgroundColor:
+                          selected === option ? "#5D8736" : "#eee0",
+                          color: selected === option ? "#fff" : "#000",
+                          border: `1px solid #5D8736`
+                        }}
+                        className={`
+                          px-4 py-1 text-balance text-sm
+                        `}
+                        onClick={() => setSelected(option)}
+                      >
+                        <p>{option}</p>
+                      </motion.button>
+                    ))}
                   </div>
                   <div className="flex flex-col gap-4">
                     <div className="flex justify-center items-center">
                       <Calculator width={36} height={36} stroke="#809D3C" />
                     </div>
-                    <h2 className="text-balance text-4xl text-center font-bold leading-8">Calories calculadora</h2>
-                    <p className="text-balance text-center text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus, odit sunt a accusantium ratione necessitatibus voluptas dolor, maiores inventore placeat nemo quibusdam mollitia rerum illo quod sint, porro debitis aperiam.</p>
+                    <h2 className="text-balance text-4xl text-center font-bold leading-8">
+                      {selected}
+                    </h2>
+                    <p className="text-balance text-center text-sm">
+                      {optionsText[selected as keyof typeof optionsText]}
+                    </p>
                   </div>
                   <div className="flex px-6 py-2.5 rounded-full gap-8 bg-[#5D8736] text-white text-sm justify-center items-center cursor-pointer mt-4" onClick={() => setToggle(!toggle)}>
                     <p>Siguiente</p>
