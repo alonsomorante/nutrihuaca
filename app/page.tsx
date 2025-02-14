@@ -9,7 +9,6 @@ import { Calculator } from "lucide-react";
 import { ArrowRight } from 'lucide-react';
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import ComponentTest from "@/components/ui/component";
 
 
 const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
