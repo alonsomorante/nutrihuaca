@@ -122,26 +122,28 @@ export default function Page() {
                     </motion.div>
                   </div>
                   <div className="flex gap-2 w-full">
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input 
                         type="text" 
                         placeholder="Edad" 
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
                     </div>
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 p-2 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input
                         type="text"
                         placeholder="Peso"
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
+                      <p>kg</p>
                     </div>
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input 
                         type="text" 
                         placeholder="Altura" 
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
+                      <p>cm</p>
                     </div>
                   </div>
                 </div>
