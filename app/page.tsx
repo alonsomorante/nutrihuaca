@@ -135,7 +135,7 @@ export default function Page() {
                         placeholder="Peso"
                         className="w-full text-sm outline-none ring-none"
                       />
-                      <p>kg</p>
+                      <p className="text-sm">KG</p>
                     </div>
                     <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input 
@@ -143,17 +143,47 @@ export default function Page() {
                         placeholder="Altura" 
                         className="w-full text-sm outline-none ring-none"
                       />
-                      <p>cm</p>
+                      <p className="text-sm">CM</p>
                     </div>
                   </div>
                 </div>
-                <div className="w-full text-white mt-2">
+                <div className="w-full flex flex-col gap-4 text-white mt-2">
                   <div>
                     <h3>Nivel de actividad</h3>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
                   </div>
-                  <div>
-
+                  <div className="flex flex-col justify-between gap-4 relative">
+                    <div className="w-0.5 text-center h-full bg-black absolute inset-0 left-3 transform -translate-x-1/2 z-0 opacity-40" />
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full"/>
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
                   </div>
                 </div>
               </motion.div>
