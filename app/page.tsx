@@ -3,7 +3,7 @@
 // import prisma from "./lib/db"
 import { useState } from "react";
 
-import ComponentTest from "@/components/ui/component";
+// import ComponentTest from "@/components/ui/component";
 import { Calculator } from "lucide-react";
 // import Square from "@/components/ui/square";
 import { ArrowRight } from 'lucide-react';
