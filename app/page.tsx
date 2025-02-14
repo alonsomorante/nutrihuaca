@@ -122,36 +122,68 @@ export default function Page() {
                     </motion.div>
                   </div>
                   <div className="flex gap-2 w-full">
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input 
                         type="text" 
                         placeholder="Edad" 
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
                     </div>
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 p-2 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input
                         type="text"
                         placeholder="Peso"
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
+                      <p className="text-sm">KG</p>
                     </div>
-                    <div className="flex-1 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input 
                         type="text" 
                         placeholder="Altura" 
-                        className="w-full py-2 px-4 text-sm outline-none ring-none"
+                        className="w-full text-sm outline-none ring-none"
                       />
+                      <p className="text-sm">CM</p>
                     </div>
                   </div>
                 </div>
-                <div className="w-full text-white mt-2">
+                <div className="w-full flex flex-col gap-4 text-white mt-2">
                   <div>
                     <h3>Nivel de actividad</h3>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
                   </div>
-                  <div>
-
+                  <div className="flex flex-col justify-between gap-4 relative">
+                    <div className="w-0.5 text-center h-full bg-black absolute inset-0 left-3 transform -translate-x-1/2 z-0 opacity-40" />
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full"/>
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10">
+                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
                   </div>
                 </div>
               </motion.div>
