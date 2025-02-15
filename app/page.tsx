@@ -107,7 +107,7 @@ export default function Page() {
           {
             toggle && (
               <motion.div
-                className="bg-[#6E8E59] h-full p-2.5 flex flex-col gap-5"
+                className="bg-[#6E8E59] h-full p-2.5 flex flex-col justify-between gap-5"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: .2, ease: 'easeInOut', type: 'tween' }}
@@ -214,12 +214,12 @@ export default function Page() {
                   <div>
                     <h2 className="text-white py-2">Objetivos</h2>
                   </div>
-                  <div className="flex gap-2 justify-between">
+                  <div className="flex gap-2">
                     {
                       goals.map((g) => (
                         <motion.div
                           onClick={() => setGoal(g)}
-                          className="bg-white px-2 py-1 rounded-lg"
+                          className="flex-1 flex items-center justify-center bg-white px-2 py-1 rounded-lg"
                           key={g}
                           animate={{
                             backgroundColor: g === goal ? '#000' : '#fff',
@@ -232,7 +232,7 @@ export default function Page() {
                     }
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-2">
                   <motion.div
                     whileTap={{ scale: 0.9 }}
                     className="flex-1 bg-white px-6 py-2 rounded-lg">
