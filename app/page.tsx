@@ -112,19 +112,19 @@ export default function Page() {
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: .2, ease: 'easeInOut', type: 'tween' }}
               >
-                <div className="flex-1 w-full text-white flex flex-col gap-2">
+                <div className="flex-1 w-full text-white flex flex-col gap-4">
                   <div className="h-[10%]">
                     <p>Parámetros corporales</p>
                   </div>
                   <div className="flex justify-center items-center gap-2 h-[60%]">
-                    <motion.div className="px-6 py-4 h-[80%] flex-1 flex justify-center  items-center shadow-lg rounded-lg" onClick={() => setGender('hombre')}
+                    <motion.div className="px-6 py-4 h-[100%] flex-1 flex justify-center  items-center shadow-lg rounded-lg" onClick={() => setGender('hombre')}
                       animate={{
                         backgroundColor: gender === 'hombre' ? '#000' : '#9DC08B',
                         color: gender === 'hombre' ? 'white' : 'black'
                       }}>
                       <p>Hombre</p>
                     </motion.div>
-                    <motion.div className="px-6 py-4 h-[80%] flex-1 flex justify-center items-center   shadow-lg rounded-lg" onClick={() => setGender('mujer')}
+                    <motion.div className="px-6 py-4 h-[100%] flex-1 flex justify-center items-center   shadow-lg rounded-lg" onClick={() => setGender('mujer')}
                       animate={{
                         backgroundColor: gender === 'mujer' ? '#000' : '#9DC08B',
                         color: gender === 'mujer' ? 'white' : 'black'
@@ -134,14 +134,14 @@ export default function Page() {
                     </motion.div>
                   </div>
                   <div className="flex gap-2 h-[30%]">
-                    <div className="h-[80%] flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input
                         type="text"
                         placeholder="Edad"
                         className="w-full text-sm outline-none ring-none"
                       />
                     </div>
-                    <div className="h-[80%] flex flex-1 items-center px-4  bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2  bg-[#9DC08B] rounded-full overflow-hidden">
                       <input
                         type="text"
                         placeholder="Peso"
@@ -149,7 +149,7 @@ export default function Page() {
                       />
                       <p className="text-sm">KG</p>
                     </div>
-                    <div className="h-[80%] flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-[#9DC08B] rounded-full overflow-hidden">
                       <input
                         type="text"
                         placeholder="Altura"
