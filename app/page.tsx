@@ -1,7 +1,7 @@
 'use client'
 // import Image from "next/image";
 // import prisma from "./lib/db"
-import { act, useState } from "react";
+import { useState } from "react";
 
 // import ComponentTest from "@/components/ui/component";
 import { Calculator } from "lucide-react";
@@ -13,6 +13,7 @@ import * as motion from "motion/react-client"
 
 const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
 const activities = ["Sedentario", "Ligero", "Moderado", "Activo", "Muy activo"]
+const goals = ["Perder peso", "Mantener peso", "Aumentar peso"]
 
 const optionsText = {
   "Peso ideal": "La calculadora de calorías se puede usar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas directrices simples para ganar o perder peso.",
@@ -34,7 +35,8 @@ export default function Page() {
   const [toggle, setToggle] = useState(false)
   const [selected, setSelected] = useState('Peso ideal')
   const [gender, setGender] = useState('hombre')
-  const [acitivity, setActivity] = useState('sedentario')
+  const [acitivity, setActivity] = useState('Sedentario')
+  const [goal, setGoal] = useState('Perder peso')
 
 
 
@@ -161,10 +163,10 @@ export default function Page() {
                   <div className="h-16">
 
                     <h3>Nivel de actividad</h3>
-                    <motion.p className="text-balance" key={acitivity} initial={{ x: 20 }} animate={{ x: 0 }} transition={{ type: 'spring' }} >{activitiesText[acitivity as keyof typeof activitiesText]}</motion.p>
+                    <motion.p className="text-balance" key={acitivity} initial={{ x: 20 }} animate={{ x: 0 }} >{activitiesText[acitivity as keyof typeof activitiesText]}</motion.p>
                   </div>
-                  <div className="flex flex-col justify-between gap-4 relative">
-                    <div className="w-0.5 text-center h-full bg-black absolute inset-0 left-3 transform -translate-x-1/2 z-0 opacity-40" />
+                  <div className="flex flex-col justify-between gap-2 relative">
+                    {/* <div className="w-0.5 text-center h-full bg-black absolute inset-0 left-2 bottom-2 transform z-0 opacity-40" /> */}
                     {
                       activities.map((activity, index) => (
                         <div key={index} className="flex gap-2 z-10" onClick={() => setActivity(activity)}>
@@ -213,25 +215,34 @@ export default function Page() {
                     <h2 className="text-white py-2">Objetivos</h2>
                   </div>
                   <div className="flex gap-2 justify-between">
-                    <div className="bg-white px-2 py-1 rounded-lg">
-                      <p className="text-balance text-sm text-center">Perder peso</p>
-                    </div>
-                    <div className="bg-white px-2 py-1 rounded-lg">
-                      <p className="text-balance text-sm text-center">Mantener peso</p>
-                    </div>
-                    <div className="bg-white px-2 py-1 rounded-lg">
-                      <p className="text-balance text-sm text-center">Aumentar peso</p>
-                    </div>
+                    {
+                      goals.map((g) => (
+                        <motion.div
+                          onClick={() => setGoal(g)}
+                          className="bg-white px-2 py-1 rounded-lg"
+                          key={g}
+                          animate={{
+                            backgroundColor: g === goal ? '#000' : '#fff',
+                            color: g === goal ? '#fff' : '#000'
+                          }}
+                        >
+                          <p className="text-balance text-sm text-center">{g}</p>
+                        </motion.div>
+                      ))
+                    }
                   </div>
                 </div>
-                <div className="flex justify-evenly gap-4">
-                  <div className="bg-white px-6 py-2 rounded-lg">
+                <div className="flex gap-4">
+                  <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    className="flex-1 bg-white px-6 py-2 rounded-lg">
                     <p className="text-balance text-sm text-center">Limpiar</p>
-                  </div>
-                  <div className="bg-white px-6 py-2 rounded-lg">
+                  </motion.div>
+                  <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    className="flex-1 bg-white px-6 py-2 rounded-lg">
                     <p className="text-balance text-sm text-center">Calcular</p>
-
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             )
