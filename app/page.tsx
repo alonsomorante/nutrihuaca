@@ -177,31 +177,7 @@ export default function Page() {
                     }
                   </div>
                 </div>
-                {/* 
-                <div className="flex flex-col flex-1">
-                  <div className="h-[30%] flex justify-center items-center">
-                    <h2 className="text-white text-center text-base font-bold">Objetivos</h2>
-                  </div>
-                  <div className="h-[70%] flex gap-2 justify-center items-center">
-                    {
-                      goals.map((g) => (
-                        <motion.div
-                          onClick={() => setGoal(g)}
-                          className="h-[80%] flex-1 flex items-center justify-center bg-white px-2 py-1 rounded-lg"
-                          key={g}
-                          animate={{
-                            backgroundColor: g === goal ? '#000' : '#fff',
-                            color: g === goal ? '#fff' : '#000'
-                          }}
-                        >
-                          <p className="text-balance text-sm text-center">{g}</p>
-                        </motion.div>
-                      ))
-                    }
-                  </div>
-                </div> 
-                */}
-                <div className="flex flex-col flex-1">
+                <div className="flex-1 flex flex-col">
                   <div className="h-[30%] flex justify-center items-center">
                     <h2 className="text-white text-center text-base font-bold">Objetivos</h2>
                   </div>
