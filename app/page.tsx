@@ -1,7 +1,7 @@
 'use client'
 // import Image from "next/image";
 // import prisma from "./lib/db"
-import { useState } from "react";
+import { act, useState } from "react";
 
 // import ComponentTest from "@/components/ui/component";
 import { Calculator } from "lucide-react";
@@ -12,6 +12,7 @@ import * as motion from "motion/react-client"
 
 
 const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
+const activities = ["Sedentario", "Ligero", "Moderado", "Activo", "Muy activo"]
 
 const optionsText = {
   "Peso ideal": "La calculadora de calorías se puede usar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas directrices simples para ganar o perder peso.",
@@ -19,14 +20,23 @@ const optionsText = {
   "Consumo calórico": "La calculadora de calorías se puede utilizar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas pautas simples para ganar o perder peso."
 }
 
+const activitiesText = {
+  "Sedentario": "Poco o ningún ejercicio",
+  "Ligero": "Ejercicio ligero (1-3 días a la semana)",
+  "Moderado": "Ejercicio moderado (3-5 días a la semana)",
+  "Activo": "Ejercicio activo (6-7 días a la semana)",
+  "Muy activo": "Ejercicio muy activo (dos veces al día, entrenamientos muy duros)"
+}
+
 
 export default function Page() {
 
   const [toggle, setToggle] = useState(false)
   const [selected, setSelected] = useState('Peso ideal')
-  const [gender, setGender] = useState('hombre') 
+  const [gender, setGender] = useState('hombre')
+  const [acitivity, setActivity] = useState('sedentario')
 
-  
+
 
   return (
     <section className="w-full h-screen p-2"  >
@@ -36,7 +46,7 @@ export default function Page() {
         <div>
           <h1 className="text-2xl font-bold"> Nutrihuaca </h1>
         </div>
-       <div className="h-full">
+        <div className="h-full">
           <AnimatePresence initial={false}>
             {
               !toggle && (
@@ -55,7 +65,7 @@ export default function Page() {
                             initial={false}
                             animate={{
                               backgroundColor:
-                              selected === option ? "#5D8736" : "#eee0",
+                                selected === option ? "#5D8736" : "#eee0",
                               color: selected === option ? "#fff" : "#000",
                               border: `1px solid #5D8736`
                             }}
@@ -95,7 +105,7 @@ export default function Page() {
           {
             toggle && (
               <motion.div
-                className="bg-[#6E8E59] h-full p-2.5"
+                className="bg-[#6E8E59] h-full p-2.5 flex flex-col gap-5"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: .2, ease: 'easeInOut', type: 'tween' }}
@@ -105,27 +115,27 @@ export default function Page() {
                     <p>Parámetros corporales</p>
                   </div>
                   <div className="flex gap-2">
-                    <motion.div className="px-6 py-4 flex-1 flex justify-center  items-center shadow-lg rounded-lg" onClick={() => setGender('hombre')} 
+                    <motion.div className="px-6 py-4 flex-1 flex justify-center  items-center shadow-lg rounded-lg" onClick={() => setGender('hombre')}
                       animate={{
                         backgroundColor: gender === 'hombre' ? '#000' : '#9DC08B',
                         color: gender === 'hombre' ? 'white' : 'black'
-                      }}> 
+                      }}>
                       <p>Hombre</p>
                     </motion.div>
                     <motion.div className="px-6 py-4 flex-1 flex justify-center items-center   shadow-lg rounded-lg" onClick={() => setGender('mujer')}
-                    animate={{
-                      backgroundColor: gender === 'mujer' ? '#000' : '#9DC08B',
-                      color: gender === 'mujer' ? 'white' : 'black'
-                    }}
-                      > 
+                      animate={{
+                        backgroundColor: gender === 'mujer' ? '#000' : '#9DC08B',
+                        color: gender === 'mujer' ? 'white' : 'black'
+                      }}
+                    >
                       <p>Mujer</p>
                     </motion.div>
                   </div>
                   <div className="flex gap-2 w-full">
                     <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
-                      <input 
-                        type="text" 
-                        placeholder="Edad" 
+                      <input
+                        type="text"
+                        placeholder="Edad"
                         className="w-full text-sm outline-none ring-none"
                       />
                     </div>
@@ -138,9 +148,9 @@ export default function Page() {
                       <p className="text-sm">KG</p>
                     </div>
                     <div className="flex flex-1 items-center px-4 bg-[#9DC08B] rounded-full overflow-hidden">
-                      <input 
-                        type="text" 
-                        placeholder="Altura" 
+                      <input
+                        type="text"
+                        placeholder="Altura"
                         className="w-full text-sm outline-none ring-none"
                       />
                       <p className="text-sm">CM</p>
@@ -148,48 +158,85 @@ export default function Page() {
                   </div>
                 </div>
                 <div className="w-full flex flex-col gap-4 text-white mt-2">
-                  <div>
+                  <div className="h-16">
+
                     <h3>Nivel de actividad</h3>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <motion.p className="text-balance" key={acitivity} initial={{ x: 20 }} animate={{ x: 0 }} transition={{ type: 'spring' }} >{activitiesText[acitivity as keyof typeof activitiesText]}</motion.p>
                   </div>
                   <div className="flex flex-col justify-between gap-4 relative">
                     <div className="w-0.5 text-center h-full bg-black absolute inset-0 left-3 transform -translate-x-1/2 z-0 opacity-40" />
-                    <div className="flex gap-2 z-10">
-                      <div className="w-6 h-6 p-1 bg-white rounded-full">
+                    {
+                      activities.map((activity, index) => (
+                        <div key={index} className="flex gap-2 z-10" onClick={() => setActivity(activity)}>
+                          <div className="w-4 h-4 p-1 bg-white rounded-full">
+                            {activity === acitivity ? <motion.div animate={{ backgroundColor: activity === acitivity ? '#000' : '#fff' }} className="h-full w-full rounded-full" /> : null}
+                            {/* <div className="h-full w-full bg-black rounded-full" /> */}
+                          </div>
+                          <motion.p animate={{ x: activity === acitivity ? 2 : 0 }} transition={{ type: 'spring' }}>{activity}</motion.p>
+                        </div>
+                      ))
+                    }
+                    {/* <div className="flex gap-2 z-10" onClick={() => setActivity('sedentario')}>
+                      <div className="w-4 h-4 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full" />
+                      </div>
+                      <p>Sendentario</p>
+                    </div>
+                    <div className="flex gap-2 z-10" onClick={() => setActivity('ligero')}>
+                      <div className="w-4 h-4 p-1 bg-white rounded-full">
                         <div className="h-full w-full bg-black rounded-full"/>
                       </div>
-                      <p>Sendentario</p>
+                      <p>Ligero</p>
                     </div>
-                    <div className="flex gap-2 z-10">
-                      <div className="w-6 h-6 p-1 bg-white rounded-full">
-                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                    <div className="flex gap-2 z-10" onClick={() => setActivity('moderado')}>
+                      <div className="w-4 h-4 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full"/>
                       </div>
-                      <p>Sendentario</p>
+                      <p>Moderado</p>
                     </div>
-                    <div className="flex gap-2 z-10">
-                      <div className="w-6 h-6 p-1 bg-white rounded-full">
-                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                    <div className="flex gap-2 z-10" onClick={() => setActivity('activo')}>
+                      <div className="w-4 h-4 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full"/>
                       </div>
-                      <p>Sendentario</p>
+                      <p>Activo</p>
                     </div>
-                    <div className="flex gap-2 z-10">
-                      <div className="w-6 h-6 p-1 bg-white rounded-full">
-                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
+                    <div className="flex gap-2 z-10" onClick={() => setActivity('muy activo')}>
+                      <div className="w-4 h-4 p-1 bg-white rounded-full">
+                        <div className="h-full w-full bg-black rounded-full"/>
                       </div>
-                      <p>Sendentario</p>
+                      <p>Muy activo</p>
+                    </div> */}
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <h2 className="text-white py-2">Objetivos</h2>
+                  </div>
+                  <div className="flex gap-2 justify-between">
+                    <div className="bg-white px-2 py-1 rounded-lg">
+                      <p className="text-balance text-sm text-center">Perder peso</p>
                     </div>
-                    <div className="flex gap-2 z-10">
-                      <div className="w-6 h-6 p-1 bg-white rounded-full">
-                        {/* <div className="h-full w-full bg-black rounded-full"/> */}
-                      </div>
-                      <p>Sendentario</p>
+                    <div className="bg-white px-2 py-1 rounded-lg">
+                      <p className="text-balance text-sm text-center">Mantener peso</p>
                     </div>
+                    <div className="bg-white px-2 py-1 rounded-lg">
+                      <p className="text-balance text-sm text-center">Aumentar peso</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-evenly gap-4">
+                  <div className="bg-white px-6 py-2 rounded-lg">
+                    <p className="text-balance text-sm text-center">Limpiar</p>
+                  </div>
+                  <div className="bg-white px-6 py-2 rounded-lg">
+                    <p className="text-balance text-sm text-center">Calcular</p>
+
                   </div>
                 </div>
               </motion.div>
             )
           }
-       </div>
+        </div>
         <div>
           <ul className="flex text-sm gap-4 font-bold">
             <li>Calculadoras</li>
