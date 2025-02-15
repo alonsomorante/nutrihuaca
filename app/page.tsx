@@ -112,7 +112,7 @@ export default function Page() {
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: .2, ease: 'easeInOut', type: 'tween' }}
               >
-                <div className="w-full text-white flex flex-col gap-2">
+                <div className="flex-1 w-full text-white flex flex-col gap-2">
                   <div>
                     <p>Parámetros corporales</p>
                   </div>
@@ -159,7 +159,7 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-                <div className="w-full flex flex-col gap-4 text-white mt-2">
+                <div className="flex-1 w-full flex flex-col gap-4 text-white mt-2">
                   <div className="h-16">
 
                     <h3>Nivel de actividad</h3>
@@ -210,7 +210,7 @@ export default function Page() {
                     </div> */}
                   </div>
                 </div>
-                <div>
+                <div className="flex-1">
                   <div>
                     <h2 className="text-white py-2">Objetivos</h2>
                   </div>
@@ -232,16 +232,16 @@ export default function Page() {
                     }
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex-1 flex gap-2">
                   <motion.div
                     whileTap={{ scale: 0.9 }}
-                    className="flex-1 bg-white px-6 py-2 rounded-lg">
-                    <p className="text-balance text-sm text-center">Limpiar</p>
+                    className="flex justify-center items-center flex-1 bg-white rounded-lg">
+                    <p className="text-balance text-base text-center">Limpiar</p>
                   </motion.div>
                   <motion.div
                     whileTap={{ scale: 0.9 }}
-                    className="flex-1 bg-white px-6 py-2 rounded-lg">
-                    <p className="text-balance text-sm text-center">Calcular</p>
+                    className="flex justify-center items-center flex-1 bg-white rounded-lg">
+                    <p className="text-balance text-base text-center">Calcular</  p>
                   </motion.div>
                 </div>
               </motion.div>
