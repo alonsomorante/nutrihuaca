@@ -4,12 +4,13 @@
 import { useEffect, useState } from "react";
 
 // import ComponentTest from "@/components/ui/component";
-import { Calculator } from "lucide-react";
 // import Square from "@/components/ui/square";
 import { ArrowRight } from 'lucide-react';
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import { calcularCalorias } from "@/lib/utils";
+import NutrihuacaLogo from '@/public/nutrihuaca-logo.webp'
+import Image from "next/image";
 
 const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
 const activities = ["Sedentario", "Ligero", "Moderado", "Activo", "Muy activo"]
@@ -65,13 +66,17 @@ export default function Page() {
 
 
   return (
-    <section className="w-full h-dvh p-2"  >
+    <section className="w-full h-dvh p-2 bg-green-dark text-white"  >
       <section
         className="h-full flex flex-col"
       >
-        <div>
-          <h1 className="text-2xl font-bold"> Nutrihuaca </h1>
-        </div>
+        {
+          !toggle && (
+            <div className="w-full flex justify-center items-center">
+              <Image src={NutrihuacaLogo} alt="nutrihuaca" className="object-center object-contain w-[50%] h-[50%] mx-auto" />
+            </div>
+          )
+        }
         <div className="h-full">
           <AnimatePresence initial={false}>
             {
@@ -84,19 +89,19 @@ export default function Page() {
                     transition={{ duration: 0 }}
                   >
                     <div className="h-full flex flex-col gap-4 justify-center items-center">
-                      <div className="flex mb-4">
+                      <div className="flex mb-4 gap-1">
                         {options.map((option) => (
                           <motion.button
                             key={option}
                             initial={false}
                             animate={{
                               backgroundColor:
-                                selected === option ? "#5D8736" : "#eee0",
+                                selected === option ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
                               color: selected === option ? "#fff" : "#000",
-                              border: `1px solid #5D8736`
+                              border: `1px solid #06363a`
                             }}
                             className={`
-                              px-4 py-1 text-balance text-sm flex-1
+                              px-4 py-1 text-balance text-sm flex-1 rounded-lg shadow-lg
                             `}
                             onClick={() => setSelected(option)}
                           >
@@ -104,10 +109,7 @@ export default function Page() {
                           </motion.button>
                         ))}
                       </div>
-                      <div className="flex flex-col gap-4">
-                        <div className="flex justify-center items-center">
-                          <Calculator width={36} height={36} stroke="#809D3C" />
-                        </div>
+                      <div className="flex flex-col gap-4 bg-light box-border text-dark rounded-lg p-4">
                         <h2 className="text-balance text-4xl text-center font-bold">
                           {selected}
                         </h2>
@@ -115,7 +117,7 @@ export default function Page() {
                           {optionsText[selected as keyof typeof optionsText]}
                         </p>
                       </div>
-                      <div className="flex px-6 py-2.5 rounded-full gap-8 bg-[#5D8736] text-white text-sm justify-center items-center cursor-pointer mt-4 md:hidden" onClick={() => setToggle(!toggle)}>
+                      <div className="flex px-6 py-2.5 rounded-full gap-8 bg-dark text-white text-sm justify-center items-center cursor-pointer mt-4 md:hidden" onClick={() => setToggle(!toggle)}>
                         <p>Siguiente</p>
                         <ArrowRight width={16} height={16} />
                       </div>
@@ -131,26 +133,28 @@ export default function Page() {
           {
             toggle && !toggleCalculator && (
               <motion.div
-                className="bg-[#6E8E59] h-full p-2.5 flex flex-col justify-between gap-4"
+                className="h-full p-2.5 flex flex-col justify-between gap-4"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
                 <motion.div className="flex-1 w-full text-white flex flex-col gap-4">
-                  <div className="h-[10%]">
-                    <p className="font-bold">Parámetros corporales</p>
+                  <div className="bg-green-light rounded-sm px-4 py-2">
+                    <p className="font-bold text-center text-sm text-dark">Parámetros corporales</p>
                   </div>
                   <div className="flex justify-center items-center gap-2 h-[60%]">
                     <motion.div className="px-6 py-4 h-[100%] flex-1 flex justify-center  items-center shadow-lg rounded-lg" onClick={() => setGender('hombre')}
                       animate={{
-                        backgroundColor: gender === 'hombre' ? '#000' : '#9DC08B',
-                        color: gender === 'hombre' ? 'white' : 'black'
+                        backgroundColor:
+                          gender === 'hombre' ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
+                        color: gender === 'hombre' ? "#fff" : "#000",
+                        border: `1px solid #06363a`
                       }}>
                       <p>Hombre</p>
                     </motion.div>
                     <motion.div className="px-6 py-4 h-[100%] flex-1 flex justify-center items-center   shadow-lg rounded-lg" onClick={() => setGender('mujer')}
                       animate={{
-                        backgroundColor: gender === 'mujer' ? '#000' : '#9DC08B',
+                        backgroundColor: gender === 'mujer' ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
                         color: gender === 'mujer' ? 'white' : 'black'
                       }}
                     >
@@ -158,7 +162,7 @@ export default function Page() {
                     </motion.div>
                   </div>
                   <div className="flex gap-2 h-[30%]">
-                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-light text-black rounded-full overflow-hidden border-black border ">
                       <input
                         type="number"
                         placeholder="Edad"
@@ -166,7 +170,7 @@ export default function Page() {
                         onChange={handleAge}
                       />
                     </div>
-                    <div className="h-[100%] flex flex-1 items-center px-4 py-2  bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2  bg-light text-black rounded-full overflow-hidden border-black border ">
                       <input
                         type="number"
                         placeholder="Peso"
@@ -175,7 +179,7 @@ export default function Page() {
                       />
                       <p className="text-sm">KG</p>
                     </div>
-                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-[#9DC08B] rounded-full overflow-hidden">
+                    <div className="h-[100%] flex flex-1 items-center px-4 py-2 bg-light text-black rounded-full overflow-hidden border-black border ">
                       <input
                         type="number"
                         placeholder="Altura"
@@ -187,36 +191,56 @@ export default function Page() {
                   </div>
                 </motion.div>
                 <motion.div className="flex-1 w-full flex flex-col gap-8 text-white">
-                  <div className="h-[20%]">
-                    <h3 className="text-base font-bold">Nivel de actividad</h3>
-                    <motion.p className="text-balance text-sm h-[24px]" key={activity} initial={{ x: 20 }} animate={{ x: 0 }} >{activitiesText[activity as keyof typeof activitiesText]}</motion.p>
+
+                  <div className="bg-green-light rounded-sm px-4 py-2">
+                    <p className="font-bold text-sm text-center text-dark">Selecciona tu nivel de actividad</p>
                   </div>
                   <div className="h-[60%] flex flex-col justify-between gap-2 relative">
                     {
-                      activities.map((activity, index) => (
-                        <div key={index} className="flex gap-2 z-10" onClick={() => setActivity(activity)}>
-                          <div className="w-4 h-4 p-1 bg-white rounded-full">
-                            {activity === activity ? <motion.div animate={{ backgroundColor: activity === activity ? '#000' : '#fff' }} className="h-full w-full rounded-full" /> : null}
-                          </div>
-                          <motion.p className="text-sm" animate={{ x: activity === activity ? 2 : 0 }} transition={{ type: 'spring' }}>{activity}</motion.p>
-                        </div>
+                      activities.map((a, index) => (
+                        <motion.div key={index}
+                          className="flex gap-2 z-10 bg-light p-2 rounded-lg text-sm items-center"
+                          onClick={() => setActivity(a)}
+                          animate={{
+                            backgroundColor:
+                              a === activity ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
+                            color:
+                              a === activity ? 'rgb(255, 255, 255)' : 'rgb(6, 54, 58)'
+                          }}
+
+                        >
+                          <motion.div
+                            className="w-4 h-4 rounded-full opacity-80 flex justify-center items-center"
+                            animate={{
+                              backgroundColor:
+                                a === activity ? 'rgb(174, 221, 200)' : 'rgb(224, 231, 231)'
+                            }}
+                          >
+                            {a === activity && <motion.div className="w-2 h-2 opacity-80 bg-dark rounded-full " />}
+                            {/* <div className="w-3 h-3 bg-dark rounded-full " /> */}
+                          </motion.div>
+                          <p className="font-bold">{a}</p>
+                        </motion.div>
                       ))
                     }
                   </div>
+                  <div className="h-[20%]">
+                    <motion.p className="text-balance text-center opacity-70 text-dark text-sm h-[24px]" key={activity} initial={{ x: 20 }} animate={{ x: 0 }} >{activitiesText[activity as keyof typeof activitiesText]}</motion.p>
+                  </div>
                 </motion.div>
                 <motion.div className="flex-1 flex flex-col">
-                  <div className="h-[30%] flex justify-center items-center">
-                    <h2 className="text-white text-center text-base font-bold">Objetivos</h2>
+                  <div className="bg-green-light rounded-sm px-4 py-2">
+                    <p className="font-bold text-center text-sm text-dark">¿Cuál es tu objetivo?</p>
                   </div>
                   <div className="h-[70%] flex gap-2 justify-center items-center">
                     {
                       goals.map((g) => (
                         <motion.div
                           onClick={() => setGoal(g)}
-                          className="h-[80%] flex-1 flex items-center justify-center bg-white px-2 py-1 rounded-lg"
+                          className="h-[80%] flex-1 flex items-center justify-center bg-light p-2 rounded-lg"
                           key={g}
                           animate={{
-                            backgroundColor: g === goal ? '#000' : '#fff',
+                            backgroundColor: g === goal ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
                             color: g === goal ? '#fff' : '#000'
                           }}
                         >
@@ -239,10 +263,10 @@ export default function Page() {
                     <p className="text-balance text-base text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
                   </motion.button>
                 </motion.div>
+
               </motion.div>
             )
           }
-
           {
             toggleCalculator && (
               <motion.div
@@ -263,13 +287,13 @@ export default function Page() {
             )
           }
         </div>
-        <div>
-          <ul className="flex text-sm gap-4 font-bold">
+        {/* <div>
+          <ul className="w-full h-full bg-blue-500 flex text-sm gap-4 font-bold items-center justify-center">
             <li>Calculadoras</li>
             <li>Recetas</li>
             <li>Tabla</li>
           </ul>
-        </div>
+        </div> */}
       </section>
 
     </section>
