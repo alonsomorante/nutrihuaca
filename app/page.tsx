@@ -83,7 +83,7 @@ export default function Page() {
                     exit={{ width: 0 }}
                     transition={{ duration: 0 }}
                   >
-                    <div className="h-full flex flex-col gap-4 p-2 justify-center items-center">
+                    <div className="h-full flex flex-col gap-4 p-2 justify-between items-center">
                       <div className="flex justify-center items-center p-8">
                         <Image src={NutrihuacaLogo} width={120} height={120} alt="nutrihuaca" className="object-center object-contain mx-auto" />
                       </div>
@@ -114,10 +114,24 @@ export default function Page() {
                         <p className="text-balance text-center text-xs">
                           {optionsText[selected as keyof typeof optionsText]}
                         </p>
-                      </div>
-                      <div className="flex px-6 py-2.5 rounded-full gap-8 bg-dark text-white text-sm justify-center items-center cursor-pointer mt-4 md:hidden" onClick={() => setToggle(!toggle)}>
+                        <div className="w-[60%] mx-auto flex px-6 py-2.5 rounded-full gap-2 bg-dark text-white text-sm justify-center items-center cursor-pointer mt-4 md:hidden" onClick={() => setToggle(!toggle)}>
                         <p>Siguiente</p>
                         <ArrowRight width={16} height={16} />
+                      </div>
+                      </div>
+                      
+                      <div className="w-full">
+                        <ul className="flex justify-center w-full gap-4">
+                          <li>
+                            Calculadoras
+                          </li>
+                          <li>
+                            Recetas
+                          </li>
+                          <li>
+                            Tabla
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </motion.div>
@@ -261,11 +275,17 @@ export default function Page() {
                     <p className="text-balance text-base text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
                   </motion.button>
                 </motion.div>
-                <div>
-                  <ul className="w-full h-full bg-blue-500 flex text-sm gap-4 font-bold items-center justify-center">
-                    <li>Calculadoras</li>
-                    <li>Recetas</li>
-                    <li>Tabla</li>
+                <div className="w-full mt-4">
+                  <ul className="flex justify-center w-full gap-4 font-bold text-dark">
+                    <li>
+                      Calculadoras
+                    </li>
+                    <li>
+                      Recetas
+                    </li>
+                    <li>
+                      Tabla
+                    </li>
                   </ul>
                 </div>
               </motion.div>
