@@ -133,7 +133,7 @@ export default function Page() {
           {
             toggle && !toggleCalculator && (
               <motion.div
-                className="h-full p-2.5 flex flex-col justify-between gap-4"
+                className="h-full bg-white p-2.5 flex flex-col justify-between gap-4"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: 0.2 }}
