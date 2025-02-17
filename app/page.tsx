@@ -66,29 +66,27 @@ export default function Page() {
 
 
   return (
-    <section className="w-full h-dvh p-2 bg-green-dark text-white"  >
+    <section className="w-full h-dvh p-2   text-white"  >
       <section
         className="h-full flex flex-col"
       >
-        {
-          !toggle && (
-            <div className="w-full flex justify-center items-center">
-              <Image src={NutrihuacaLogo} alt="nutrihuaca" className="object-center object-contain w-[50%] h-[50%] mx-auto" />
-            </div>
-          )
-        }
+   
         <div className="h-full">
           <AnimatePresence initial={false}>
             {
               !toggle && (
-                <div className="h-full md:flex">
+                <div className="h-full bg-green-light md:flex">
+                 
                   <motion.div
                     className="h-full w-full md:flex-1"
                     // initial={{ width: '100%' }}
                     exit={{ width: 0 }}
                     transition={{ duration: 0 }}
                   >
-                    <div className="h-full flex flex-col gap-4 justify-center items-center">
+                    <div className="h-full flex flex-col gap-4 p-2 justify-center items-center">
+                      <div className="flex justify-center items-center p-8">
+                        <Image src={NutrihuacaLogo} width={120} height={120} alt="nutrihuaca" className="object-center object-contain mx-auto" />
+                      </div>
                       <div className="flex mb-4 gap-1">
                         {options.map((option) => (
                           <motion.button
@@ -110,10 +108,10 @@ export default function Page() {
                         ))}
                       </div>
                       <div className="flex flex-col gap-4 bg-light box-border text-dark rounded-lg p-4">
-                        <h2 className="text-balance text-4xl text-center font-bold">
+                        <h2 className="text-balance text-2xl text-center font-bold">
                           {selected}
                         </h2>
-                        <p className="text-balance text-center text-sm">
+                        <p className="text-balance text-center text-xs">
                           {optionsText[selected as keyof typeof optionsText]}
                         </p>
                       </div>
@@ -133,7 +131,7 @@ export default function Page() {
           {
             toggle && !toggleCalculator && (
               <motion.div
-                className="h-full bg-white p-2.5 flex flex-col justify-between gap-4"
+                className="h-screen bg-white p-2.5 flex flex-col justify-between gap-4"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: 0.2 }}
@@ -190,7 +188,7 @@ export default function Page() {
                     </div>
                   </div>
                 </motion.div>
-                <motion.div className="flex-1 w-full flex flex-col gap-8 text-white">
+                <motion.div className="flex-1 w-full flex flex-col gap-2 text-white">
 
                   <div className="bg-green-light rounded-sm px-4 py-2">
                     <p className="font-bold text-sm text-center text-dark">Selecciona tu nivel de actividad</p>
@@ -224,8 +222,8 @@ export default function Page() {
                       ))
                     }
                   </div>
-                  <div className="h-[20%]">
-                    <motion.p className="text-balance text-center opacity-70 text-dark text-sm h-[24px]" key={activity} initial={{ x: 20 }} animate={{ x: 0 }} >{activitiesText[activity as keyof typeof activitiesText]}</motion.p>
+                  <div className="h-[20%] mt-8">
+                    <motion.p className="text-balance text-center opacity-70 text-dark text-sm w-full" key={activity} initial={{ x: 20 }} animate={{ x: 0 }} >{activitiesText[activity as keyof typeof activitiesText]}</motion.p>
                   </div>
                 </motion.div>
                 <motion.div className="flex-1 flex flex-col">
@@ -237,7 +235,7 @@ export default function Page() {
                       goals.map((g) => (
                         <motion.div
                           onClick={() => setGoal(g)}
-                          className="h-[80%] flex-1 flex items-center justify-center bg-light p-2 rounded-lg"
+                          className="h-[80%] flex-1 flex items-center justify-center bg-light p-4 rounded-lg shadow-lg"
                           key={g}
                           animate={{
                             backgroundColor: g === goal ? 'rgb(6, 54, 58)' : 'rgb(224, 231, 231)',
@@ -253,17 +251,23 @@ export default function Page() {
                 <motion.div className="flex-1 flex items-center gap-2">
                   <motion.div
                     whileTap={{ scale: 0.9 }}
-                    className="flex justify-center items-center flex-1 h-[60%] bg-white rounded-lg">
-                    <p className="text-balance text-base text-center">Limpiar</p>
+                    className="flex justify-center items-center flex-1 px-4 py-2 bg-light rounded-lg">
+                    <p className="text-balance text-base text-center text-dark font-bold">Limpiar</p>
                   </motion.div>
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     type="submit"
-                    className="flex justify-center items-center flex-1 h-[60%] bg-white rounded-lg">
+                    className="flex justify-center items-center flex-1 px-4 py-2 bg-dark rounded-lg">
                     <p className="text-balance text-base text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
                   </motion.button>
                 </motion.div>
-
+                <div>
+                  <ul className="w-full h-full bg-blue-500 flex text-sm gap-4 font-bold items-center justify-center">
+                    <li>Calculadoras</li>
+                    <li>Recetas</li>
+                    <li>Tabla</li>
+                  </ul>
+                </div>
               </motion.div>
             )
           }
@@ -287,15 +291,8 @@ export default function Page() {
             )
           }
         </div>
-        {/* <div>
-          <ul className="w-full h-full bg-blue-500 flex text-sm gap-4 font-bold items-center justify-center">
-            <li>Calculadoras</li>
-            <li>Recetas</li>
-            <li>Tabla</li>
-          </ul>
-        </div> */}
+        
       </section>
-
     </section>
   )
 } 
