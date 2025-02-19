@@ -90,7 +90,7 @@ export default function Page() {
           <AnimatePresence initial={false}>
             {
               !toggle && (
-                <div className="h-full bg-green-light md:flex">
+                <div className="h-full  md:flex">
                   <motion.div
                     className="h-full w-full md:flex-1"
                     exit={{ width: 0 }}
@@ -113,20 +113,20 @@ export default function Page() {
                 animate={{ width: '100%', opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
-                <PersonalInfoForm gender={gender} setGender={setGender} handleAge={handleAge} handleHeight={handleHeight} handleWeight={handleWeight}/>
-                <ActivitySelector activities={activities} activity={activity} setActivity={setActivity} activitiesText={activitiesText}/>
-                <GoalSelector goal={goal} goals={goals} setGoal={setGoal}/>
+                <PersonalInfoForm gender={gender} setGender={setGender} handleAge={handleAge} handleHeight={handleHeight} handleWeight={handleWeight} />
+                <ActivitySelector activities={activities} activity={activity} setActivity={setActivity} activitiesText={activitiesText} />
+                <GoalSelector goal={goal} goals={goals} setGoal={setGoal} />
                 <motion.div className="flex-1 flex items-center gap-2">
                   <motion.div
                     whileTap={{ scale: 0.9 }}
                     className="flex justify-center items-center flex-1 px-4 py-2 bg-light rounded-lg">
-                    <p className="text-balance text-base text-center text-dark font-bold">Limpiar</p>
+                    <p className="text-balance text-sm text-center text-dark font-bold">Limpiar</p>
                   </motion.div>
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     type="submit"
                     className="flex justify-center items-center flex-1 px-4 py-2 bg-dark rounded-lg">
-                    <p className="text-balance text-base text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
+                    <p className="text-balance text-sm text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
                   </motion.button>
                 </motion.div>
                 <div className="w-full py-2">
