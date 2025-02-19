@@ -1,9 +1,11 @@
 import type React from "react"
 import * as motion from "motion/react-client"
 
+type Gender = "hombre" | "mujer";
+
 interface PersonalInfoFormProps {
-  gender: string
-  setGender: (gender: string) => void
+  gender: Gender
+  setGender: (gender: Gender) => void
   handleAge: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleWeight: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleHeight: (e: React.ChangeEvent<HTMLInputElement>) => void
