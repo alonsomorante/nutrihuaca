@@ -1,10 +1,12 @@
 import type React from "react"
 import * as motion from "motion/react-client"
 
+type Goal = "Perder peso" | "Mantener peso" | "Ganar peso";
+
 interface GoalSelectorProps {
   goals: string[]
-  goal: string
-  setGoal: (goal: string) => void
+  goal: Goal
+  setGoal: (goal: Goal) => void
 }
 
 const GoalSelector: React.FC<GoalSelectorProps> = ({ goals, goal, setGoal }) => {
@@ -16,7 +18,7 @@ const GoalSelector: React.FC<GoalSelectorProps> = ({ goals, goal, setGoal }) => 
       <div className="h-[70%] flex gap-2 justify-center items-center">
         {goals.map((g) => (
           <motion.div
-            onClick={() => setGoal(g)}
+            onClick={() => setGoal(g as Goal)}
             className="h-[80%] flex-1 flex items-center justify-center bg-light p-4 rounded-lg shadow-lg"
             key={g}
             animate={{

@@ -1,10 +1,12 @@
 import type React from "react"
 import * as motion from "motion/react-client"
 
+type Activity = "Sedentario" | "Ligero" | "Moderado" | "Activo" | "Muy activo";
+
 interface ActivitySelectorProps {
   activities: string[]
-  activity: string
-  setActivity: (activity: string) => void
+  activity: Activity
+  setActivity: (activity: Activity) => void
   activitiesText: Record<string, string>
 }
 
@@ -19,7 +21,7 @@ const ActivitySelector: React.FC<ActivitySelectorProps> = ({ activities, activit
           <motion.div
             key={index}
             className="flex gap-2 z-10 bg-light p-2 rounded-lg text-sm items-center"
-            onClick={() => setActivity(a)}
+            onClick={() => setActivity(a as Activity)}
             animate={{
               backgroundColor: a === activity ? "rgb(6, 54, 58)" : "rgb(224, 231, 231)",
               color: a === activity ? "rgb(255, 255, 255)" : "rgb(6, 54, 58)",

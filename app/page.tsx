@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 // import Square from "@/components/ui/square";
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { calcularCalorias } from "@/lib/utils";
+import { calculateCalories } from "@/lib/utils";
 import ActivitySelector from "@/components/ActivitySelector";
 import GoalSelector from "@/components/GoalSelector";
 import PersonalInfoForm from "@/components/PersonalForm";
@@ -31,20 +31,32 @@ const activitiesText = {
   "Muy activo": "Ejercicio muy activo (dos veces al día, entrenamientos muy duros)"
 }
 
+type Gender = "hombre" | "mujer";
+type Activity = "Sedentario" | "Ligero" | "Moderado" | "Activo" | "Muy activo";
+type Goal = "Perder peso" | "Mantener peso" | "Ganar peso";
+
+
+type Plan = {
+  calorias: number,
+  deficit?: number,
+  superavit?: number
+  dificultad?: string,
+  weightPerWeek: string
+}
 
 export default function Page() {
 
   const [toggle, setToggle] = useState(false)
   const [toggleCalculator, setToggleCalculator] = useState(false)
   const [selected, setSelected] = useState('Peso ideal')
-  const [gender, setGender] = useState('hombre')
-  const [activity, setActivity] = useState('Sedentario')
-  const [goal, setGoal] = useState('Perder peso')
+  const [gender, setGender] = useState<Gender>('hombre')
+  const [activity, setActivity] = useState<Activity>('Sedentario')
+  const [goal, setGoal] = useState<Goal>('Perder peso')
   const [age, setAge] = useState(0)
   const [height, setHeight] = useState(0)
   const [weight, setWeight] = useState(0)
 
-  const [calories, setCalories] = useState(0)
+  const [calories, setCalories] = useState<Plan[]>([])
 
 
   const handleAge = (e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -60,9 +72,12 @@ export default function Page() {
   }
 
   useEffect(() => {
-    setCalories(calcularCalorias({ goal, activity, age, height, weight, gender }))
+    const allgo = calculateCalories({activity, age, gender, goal, height, weight})
+    setCalories(allgo)
 
   }, [toggleCalculator])
+
+  console.log(calories)
 
 
 
@@ -135,17 +150,19 @@ export default function Page() {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 0.2 }} className="w-full h-full bg-amber-300">
-                {selected},
-                {activity},
-                {goal},
-                {gender},
-                {age},
-                {height},
-                {weight},
-                <div>
-                  <p className="text-2xl font-bold">TIENES QUE CONSUMIR: {calories}</p>
-                </div>
+                transition={{ duration: 0.2 }} className="w-full h-full bg-amber-300 flex flex-col gap-4">
+                  {
+                    calories.map((calorie, i) => {
+                      return (
+                        <div key={i} className="bg-dark flex">
+                            <p>{calorie.weightPerWeek}</p>
+                            <p>{calorie.deficit}</p>
+                            <p>{calorie.dificultad}</p>
+                            <p>{calorie.calorias}</p>
+                        </div>
+                      )
+                    })
+                  }
               </motion.div>
             )
           }
