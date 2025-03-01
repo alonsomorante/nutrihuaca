@@ -8,48 +8,66 @@ interface ActivitySelectorProps {
   activitiesText: Record<string, string>
 }
 
-const ActivitySelector: React.FC<ActivitySelectorProps> = ({ activities, activity, setActivity, activitiesText }) => {
+const ActivitySelector: React.FC<ActivitySelectorProps> = ({
+  activities,
+  activity,
+  setActivity,
+  activitiesText
+}) => {
   return (
-    <motion.div className="flex-1 w-full flex flex-col gap-2 text-white">
-      <div className="bg-green-light rounded-sm px-4 py-2">
+    <div className="w-full flex flex-col gap-3 text-dark">
+      <div className="bg-green-light rounded-md px-4 py-2.5">
         <p className="font-bold text-sm text-center text-dark">Selecciona tu nivel de actividad</p>
       </div>
-      <div className="h-[60%] flex flex-col justify-between gap-2 relative">
-        {activities.map((a, index) => (
+
+      <div className="flex flex-col gap-2.5">
+        {activities.map((activityOption) => (
           <motion.div
-            key={index}
-            className="flex gap-2 z-10 bg-light p-2 rounded-lg text-sm items-center"
-            onClick={() => setActivity(a)}
+            key={activityOption}
+            className="flex gap-3 p-3 rounded-lg text-sm items-center cursor-pointer"
+            onClick={() => setActivity(activityOption)}
             animate={{
-              backgroundColor: a === activity ? "rgb(6, 54, 58)" : "rgb(224, 231, 231)",
-              color: a === activity ? "rgb(255, 255, 255)" : "rgb(6, 54, 58)",
+              backgroundColor: activityOption === activity ? "rgb(6, 54, 58)" : "rgb(224, 231, 231)",
+              color: activityOption === activity ? "rgb(255, 255, 255)" : "rgb(6, 54, 58)",
             }}
+            whileHover={{
+              scale: activityOption === activity ? 1 : 1.02,
+              transition: { duration: 0.2 }
+            }}
+            transition={{ duration: 0.15 }}
           >
             <motion.div
-              className="w-4 h-4 rounded-full opacity-80 flex justify-center items-center"
+              className="w-5 h-5 rounded-full flex justify-center items-center"
               animate={{
-                backgroundColor: a === activity ? "rgb(174, 221, 200)" : "rgb(224, 231, 231)",
+                backgroundColor: activityOption === activity ? "rgb(174, 221, 200)" : "rgb(224, 231, 231)",
+                border: activityOption === activity ? "none" : "2px solid rgb(6, 54, 58)"
               }}
             >
-              {a === activity && <motion.div className="w-2 h-2 opacity-80 bg-dark rounded-full" />}
+              {activityOption === activity && (
+                <motion.div
+                  className="w-2.5 h-2.5 bg-dark rounded-full"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.1 }}
+                />
+              )}
             </motion.div>
-            <p className="font-bold">{a}</p>
+            <p className="font-medium">{activityOption}</p>
           </motion.div>
         ))}
       </div>
-      <div className="h-[20%] mt-8">
-        <motion.p
-          className="text-balance text-center opacity-70 text-dark text-sm w-full"
-          key={activity}
-          initial={{ x: 20 }}
-          animate={{ x: 0 }}
-        >
-          {activitiesText[activity]}
-        </motion.p>
-      </div>
-    </motion.div>
+
+      <motion.p
+        className="text-balance text-center text-dark/70 text-sm mt-3 px-2"
+        key={activity}
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {activitiesText[activity]}
+      </motion.p>
+    </div>
   )
 }
 
 export default ActivitySelector
-

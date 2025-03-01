@@ -1,156 +1,174 @@
-'use client'
-// import Image from "next/image";
-// import prisma from "./lib/db"
-import { useEffect, useState } from "react";
+"use client"
 
-// import ComponentTest from "@/components/ui/component";
-// import Square from "@/components/ui/square";
+import type React from "react"
+
+import { useState } from "react"
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
-import { calcularCalorias } from "@/lib/utils";
-import ActivitySelector from "@/components/ActivitySelector";
-import GoalSelector from "@/components/GoalSelector";
-import PersonalInfoForm from "@/components/PersonalForm";
-import OptionSelector from "@/components/OptionSelector";
+import ActivitySelector from "@/components/ActivitySelector"
+import GoalSelector from "@/components/GoalSelector"
+import PersonalInfoForm from "@/components/PersonalForm"
+import OptionSelector from "@/components/OptionSelector"
+import ResultsDisplay from "@/components/ResultsDisplay"
 
-const options = ["Peso ideal", "Porcentaje de grasa", "Consumo calórico"]
-const activities = ["Sedentario", "Ligero", "Moderado", "Activo", "Muy activo"]
-const goals = ["Perder peso", "Mantener peso", "Ganar peso"]
-
-const optionsText = {
-  "Peso ideal": "La calculadora de calorías se puede usar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas directrices simples para ganar o perder peso.",
-  "Porcentaje de grasa": "La calculadora de grasa corporal se puede utilizar para estimar su grasa corporal total basada en medidas específicas.",
-  "Consumo calórico": "La calculadora de calorías se puede utilizar para estimar el número de calorías que una persona necesita consumir cada día. Esta calculadora también puede proporcionar algunas pautas simples para ganar o perder peso."
-}
-
-const activitiesText = {
-  "Sedentario": "Poco o ningún ejercicio",
-  "Ligero": "Ejercicio ligero (1-3 días a la semana)",
-  "Moderado": "Ejercicio moderado (3-5 días a la semana)",
-  "Activo": "Ejercicio activo (6-7 días a la semana)",
-  "Muy activo": "Ejercicio muy activo (dos veces al día, entrenamientos muy duros)"
-}
-
+// Constants moved to a separate file for better organization
+import { options, activities, goals, optionsText, activitiesText } from "@/lib/constants"
 
 export default function Page() {
+  // State management
+  const [currentStep, setCurrentStep] = useState<"options" | "form" | "results">("options")
+  const [selected, setSelected] = useState("Peso ideal")
+  const [formData, setFormData] = useState({
+    gender: "hombre",
+    activity: "Sedentario",
+    goal: "Perder peso",
+    age: 0,
+    height: 0,
+    weight: 0,
+  })
+  const [formError, setFormError] = useState<string | null>(null)
 
-  const [toggle, setToggle] = useState(false)
-  const [toggleCalculator, setToggleCalculator] = useState(false)
-  const [selected, setSelected] = useState('Peso ideal')
-  const [gender, setGender] = useState('hombre')
-  const [activity, setActivity] = useState('Sedentario')
-  const [goal, setGoal] = useState('Perder peso')
-  const [age, setAge] = useState(0)
-  const [height, setHeight] = useState(0)
-  const [weight, setWeight] = useState(0)
-
-  const [calories, setCalories] = useState(0)
-
-
-  const handleAge = (e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-    setAge(e.target.value)
+  // Handlers for form data updates
+  const updateFormData = (key: keyof typeof formData, value: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    setFormData((prev) => ({ ...prev, [key]: value }))
   }
 
-  const handleHeight = (e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-    setHeight(e.target.value)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: "age" | "height" | "weight") => {
+    updateFormData(field, Number(e.target.value))
   }
 
-  const handleWeight = (e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-    setWeight(e.target.value)
+  // Calculate results
+  const calculateResults = () => {
+    // Validate form data before proceeding
+    if (formData.age <= 0 || formData.height <= 0 || formData.weight <= 0) {
+      setFormError("Por favor completa todos los campos correctamente")
+      return
+    }
+    setFormError(null)
+    setCurrentStep("results")
   }
 
-  useEffect(() => {
-    setCalories(calcularCalorias({ goal, activity, age, height, weight, gender }))
-
-  }, [toggleCalculator])
-
-
+  const resetForm = () => {
+    setFormData({
+      gender: "hombre",
+      activity: "Sedentario",
+      goal: "Perder peso",
+      age: 0,
+      height: 0,
+      weight: 0,
+    })
+  }
 
   return (
-    <section className="w-full h-dvh p-2   text-white"  >
-      <section
-        className="h-full flex flex-col"
-      >
+    <section className="w-full h-dvh p-2 text-white">
+      <section className="h-full flex flex-col">
         <div className="h-full">
           <AnimatePresence initial={false}>
-            {
-              !toggle && (
-                <div className="h-full  md:flex">
-                  <motion.div
-                    className="h-full w-full md:flex-1"
-                    exit={{ width: 0 }}
-                    transition={{ duration: 0 }}
-                  >
-                    <OptionSelector options={options} selected={selected} setSelected={setSelected} optionsText={optionsText} setToggle={setToggle} />
-                  </motion.div>
-                  <div className="hidden md:bg-blue-400 md:h-full md:block md:flex-1">
-                    asdasd
+            {currentStep === "options" && (
+              <motion.div className="h-full w-full md:flex" exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+                <div className="h-full w-full md:flex-1">
+                  <OptionSelector
+                    options={options}
+                    selected={selected}
+                    setSelected={setSelected}
+                    optionsText={optionsText}
+                    onNext={() => setCurrentStep("form")}
+                  />
+                </div>
+                <div className="hidden md:block md:flex-1 md:bg-primary/10 md:p-4 md:rounded-lg">
+                  <div className="h-full flex items-center justify-center">
+                    <p className="text-dark text-lg font-medium text-center">
+                      Completa el formulario para calcular tu {selected.toLowerCase()}
+                    </p>
                   </div>
                 </div>
-              )
-            }
+              </motion.div>
+            )}
           </AnimatePresence>
-          {
-            toggle && !toggleCalculator && (
-              <motion.div
-                className="h-screen bg-white p-2.5 flex flex-col justify-between gap-4"
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '100%', opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              >
-                <PersonalInfoForm gender={gender} setGender={setGender} handleAge={handleAge} handleHeight={handleHeight} handleWeight={handleWeight} />
-                <ActivitySelector activities={activities} activity={activity} setActivity={setActivity} activitiesText={activitiesText} />
-                <GoalSelector goal={goal} goals={goals} setGoal={setGoal} />
-                <motion.div className="flex-1 flex items-center gap-2">
-                  <motion.div
-                    whileTap={{ scale: 0.9 }}
-                    className="flex justify-center items-center flex-1 px-4 py-2 bg-light rounded-lg">
-                    <p className="text-balance text-sm text-center text-dark font-bold">Limpiar</p>
-                  </motion.div>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    type="submit"
-                    className="flex justify-center items-center flex-1 px-4 py-2 bg-dark rounded-lg">
-                    <p className="text-balance text-sm text-center" onClick={() => setToggleCalculator(prev => !prev)}>Calcular</  p>
-                  </motion.button>
+
+          {currentStep === "form" && (
+            <motion.div
+              className="h-screen bg-white p-4 flex flex-col justify-between gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <PersonalInfoForm
+                gender={formData.gender}
+                setGender={(gender) => updateFormData("gender", gender)}
+                handleAge={(e) => handleInputChange(e, "age")}
+                handleHeight={(e) => handleInputChange(e, "height")}
+                handleWeight={(e) => handleInputChange(e, "weight")}
+                age={formData.age}
+                height={formData.height}
+                weight={formData.weight}
+              />
+
+              <ActivitySelector
+                activities={activities}
+                activity={formData.activity}
+                setActivity={(activity) => updateFormData("activity", activity)}
+                activitiesText={activitiesText}
+              />
+
+              <GoalSelector goals={goals} goal={formData.goal} setGoal={(goal) => updateFormData("goal", goal)} />
+
+              {formError && (
+                <motion.div
+                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-center">{formError}</p>
                 </motion.div>
-                <div className="w-full py-2">
-                  <ul className="flex justify-center w-full gap-4 font-bold text-dark">
-                    <li>
-                      Calculadoras
-                    </li>
-                    <li>
-                      Recetas
-                    </li>
-                    <li>
-                      Tabla
-                    </li>
-                  </ul>
-                </div>
+              )}
+
+              <motion.div className="flex items-center gap-3 mt-2">
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setCurrentStep("options")}
+                  className="flex-1 px-4 py-3 bg-light rounded-lg text-dark font-medium"
+                >
+                  Atrás
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={resetForm}
+                  className="flex-1 px-4 py-3 bg-light rounded-lg text-dark font-medium"
+                >
+                  Limpiar
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={calculateResults}
+                  className="flex-1 px-4 py-3 bg-dark rounded-lg text-white font-medium"
+                >
+                  Calcular
+                </motion.button>
               </motion.div>
-            )
-          }
-          {
-            toggleCalculator && (
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 0.2 }} className="w-full h-full bg-amber-300">
-                {selected},
-                {activity},
-                {goal},
-                {gender},
-                {age},
-                {height},
-                {weight},
-                <div>
-                  <p className="text-2xl font-bold">TIENES QUE CONSUMIR: {calories}</p>
-                </div>
-              </motion.div>
-            )
-          }
+
+              <NavFooter />
+            </motion.div>
+          )}
+
+          {currentStep === "results" && (
+            <ResultsDisplay calculationType={selected} formData={formData} onBack={() => setCurrentStep("form")} />
+          )}
         </div>
       </section>
     </section>
   )
-} 
+}
+
+// Footer navigation component
+const NavFooter = () => (
+  <div className="w-full py-3 border-t border-gray-100">
+    <ul className="flex justify-center w-full gap-6 font-medium text-dark">
+      <li className="cursor-pointer hover:text-primary transition-colors">Calculadoras</li>
+      <li className="cursor-pointer hover:text-primary transition-colors">Recetas</li>
+      <li className="cursor-pointer hover:text-primary transition-colors">Tabla</li>
+    </ul>
+  </div>
+)
+
